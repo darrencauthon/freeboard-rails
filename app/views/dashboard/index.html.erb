@@ -7,10 +7,10 @@
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black" />
     <meta name="viewport" content = "width = device-width, initial-scale = 1, user-scalable = no" />
-    <link href="/assets/freeboard/freeboard.min.css" rel="stylesheet" />
-    <script src="/assets/freeboard/freeboard.thirdparty.min.js"></script>
+    <link href="/assets/freeboard/freeboard.css" rel="stylesheet" />
+    <script src="/assets/freeboard/freeboard.thirdparty.js"></script>
     <script type="text/javascript">
-        head.js("/assets/freeboard/freeboard+plugins.min.js",
+        head.js("/assets/freeboard/freeboard+plugins.js",
                 // *** Load more plugins here ***
                 function(){
                     $(function()
@@ -22,10 +22,31 @@
 </head>
 <body>
 <script type="text/javascript">
+  function hacking(){
+    return true;
+  }
+
   function save_the_dashboard(input)
   {
-    console.log(input);
-    console.log($);
+				$.ajax({
+          type: 'post',
+					url    : '/_save_board/test',
+          data:  { data: input },
+				});
+  }
+
+  function load_the_dashboard(source)
+  {
+    $.ajax({
+      type: 'get',
+      url    : '/_get_board/test',
+      success: function(data)
+      {
+        console.log(data);
+        source.loadDashboard(data.data);
+        source.setEditing(false);
+      }
+    });
   }
 </script>
 <div id="board-content">

@@ -497,6 +497,8 @@ function FreeboardModel(datasourcePlugins, widgetPlugins, freeboardUI)
 
 	this.loadDashboardFromLocalFile = function()
 	{
+    if(hacking())
+      return load_the_dashboard(self);
 		// Check for the various File API support.
 		if(window.File && window.FileReader && window.FileList && window.Blob)
 		{
@@ -536,15 +538,16 @@ function FreeboardModel(datasourcePlugins, widgetPlugins, freeboardUI)
 
 	this.saveDashboard = function()
 	{
-    save_the_dashboard(JSON.stringify(self.serialize()));
-		//var contentType = 'application/octet-stream';
-		//var a = document.createElement('a');
-		//var blob = new Blob([JSON.stringify(self.serialize())], {'type': contentType});
-		//document.body.appendChild(a);
-		//a.href = window.URL.createObjectURL(blob);
-		//a.download = "dashboard.json";
-		//a.target="_self";
-		//a.click();
+    if(hacking())
+      return save_the_dashboard(JSON.stringify(self.serialize()));
+		var contentType = 'application/octet-stream';
+		var a = document.createElement('a');
+		var blob = new Blob([JSON.stringify(self.serialize())], {'type': contentType});
+		document.body.appendChild(a);
+		a.href = window.URL.createObjectURL(blob);
+		a.download = "dashboard.json";
+		a.target="_self";
+		a.click();
 	}
 
 	this.addDatasource = function(datasource)
