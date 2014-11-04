@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  get ':id'               => 'dashboard#index'
+  get ':key'              => 'dashboard#index'
   post '_save_board/:key' => 'dashboard#save_board'
   get  '_get_board/:key'  => 'dashboard#get_board'
   # The priority is based upon order of creation: first created -> highest priority.

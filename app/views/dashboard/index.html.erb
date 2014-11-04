@@ -30,8 +30,11 @@
   {
 				$.ajax({
           type: 'post',
-					url    : '/_save_board/test',
+          url    : '/_save_board/<%= @dashboard.key %>',
           data:  { data: input },
+          success: function(data){
+            alert('The dashboard was saved.');
+          }
 				});
   }
 
@@ -39,10 +42,9 @@
   {
     $.ajax({
       type: 'get',
-      url    : '/_get_board/test',
+      url    : '/_get_board/<%= @dashboard.key %>',
       success: function(data)
       {
-        console.log(data);
         source.loadDashboard(data.data);
         source.setEditing(false);
       }
