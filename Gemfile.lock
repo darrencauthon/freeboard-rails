@@ -1,3 +1,9 @@
+PATH
+  remote: freeboard
+  specs:
+    freeboard (0.0.1)
+      rails (~> 4.1.7)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -109,6 +115,7 @@ PLATFORMS
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
+  freeboard!
   jbuilder (~> 2.0)
   jquery-rails
   rails (= 4.1.7)
