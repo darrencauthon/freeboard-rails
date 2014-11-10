@@ -1,7 +1,5 @@
 Rails.application.routes.draw do
-  get ':key'              => 'freeboard/dashboard#index'
-  post '_save_board/:key' => 'freeboard/dashboard#save_board'
-  get  '_get_board/:key'  => 'freeboard/dashboard#get_board'
+  mount Freeboard::Engine, at: "/"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
