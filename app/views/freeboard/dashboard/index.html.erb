@@ -46,8 +46,11 @@
       url    : '/_get_board/<%= @dashboard.key %>',
       success: function(data)
       {
-        source.loadDashboard(data.data);
-        source.setEditing(false);
+        if(Object.keys(data.data).length > 0)
+        {
+          source.loadDashboard(data.data);
+          source.setEditing(false);
+        }
       }
     });
   }
