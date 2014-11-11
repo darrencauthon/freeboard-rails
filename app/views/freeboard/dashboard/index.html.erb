@@ -50,6 +50,13 @@
       }
     });
   }
+
+  $(document).ready(function(){
+    setTimeout(function(){
+      $('#full-screen').click();
+    }, 1000);
+  });
+
 </script>
 <div id="board-content">
     <img id="dash-logo" data-bind="attr:{src: header_image}, visible:header_image()">
