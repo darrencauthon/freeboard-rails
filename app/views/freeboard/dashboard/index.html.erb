@@ -28,14 +28,15 @@
 
   function save_the_dashboard(input)
   {
-    $.ajax({
-      type: 'post',
-      url    : '/_save_board/<%= @dashboard.key %>',
-      data:  { data: input },
-      success: function(data){
-        alert('The dashboard was saved.');
-      }
-    });
+    if (confirm('Are you sure you want to save this dashboard?'))
+      $.ajax({
+        type: 'post',
+        url    : '/_save_board/<%= @dashboard.key %>',
+        data:  { data: input },
+        success: function(data){
+          alert('The dashboard was saved.');
+        }
+      });
   }
 
   function load_the_dashboard(source)
