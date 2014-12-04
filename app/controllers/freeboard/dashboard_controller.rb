@@ -21,7 +21,15 @@ module Freeboard
     private
 
     def dashboard
-      @dashboard ||= Dashboard.where(key: params[:key]).first || Dashboard.new(key: params[:key])
+      @dashboard ||= dashboard_matched_by_key || a_blank_dashboard
+    end
+
+    def dashboard_matched_by_key
+      Dashboard.where(key: params[:key]).first
+    end
+
+    def a_blank_dashboard
+      Dashboard.new(key: params[:key])
     end
 
   end
