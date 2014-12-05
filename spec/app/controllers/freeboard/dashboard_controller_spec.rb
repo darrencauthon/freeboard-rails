@@ -15,7 +15,7 @@ describe Freeboard::DashboardController do
   end
 
   describe "index" do
-    describe "no dashboard exists" do
+    describe "no dashboards exists" do
       it "should return a blank dashboard" do
         controller.index
         dashboard = controller.instance_eval { @dashboard }
