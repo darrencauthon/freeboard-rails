@@ -32,6 +32,38 @@ describe Freeboard::DashboardController do
     end
   end
 
+  describe "save_board" do
+
+    let(:new_data)  { Object.new }
+    let(:dashboard) { Struct.new(:data).new Object.new }
+
+    let(:jsonified_data) { Object.new }
+
+    before do
+      params[:data] = new_data
+      controller.stubs(:dashboard).returns dashboard
+
+      JSON.stubs(:parse).with(new_data).returns jsonified_data
+
+      dashboard.stubs(:save)
+      controller.stubs(:render)
+    end
+
+    it "should save the jsonified data" do
+      json = jsonified_data
+      dashboard.expects(:save).with do
+        dashboard.data.must_be_same_as json
+      end
+      controller.save_board
+    end
+
+    it "should render the dashboard data as json" do
+      controller.expects(:render).with( { json: { data: jsonified_data } } )
+      controller.save_board
+    end
+
+  end
+
   describe "dashboard" do
 
     let(:key) { Object.new }
