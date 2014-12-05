@@ -15,23 +15,33 @@ describe Freeboard::DashboardController do
   end
 
   describe "index" do
+
+    let(:key) { Object.new }
+
+    before { params[:key] = key }
+
     describe "no dashboards exists" do
+
+      before do
+        Freeboard::Dashboard.stubs(:where)
+                            .with(key: key)
+                            .returns []
+      end
+
       it "should return a blank dashboard" do
         controller.index
         dashboard = controller.instance_eval { @dashboard }
         dashboard.is_a?(Freeboard::Dashboard)
         dashboard.id.nil?.must_equal true
       end
+
     end
 
     describe "a matching dashboard exists" do
 
-      let(:key) { Object.new }
-
       let(:matching_dashboard) { Object.new }
 
       before do
-        params[:key] = key
         Freeboard::Dashboard.stubs(:where)
                             .with(key: key)
                             .returns [matching_dashboard]
