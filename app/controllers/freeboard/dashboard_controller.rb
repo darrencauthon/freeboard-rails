@@ -26,6 +26,10 @@ module Freeboard
       @dashboard ||= lookup_dashboard || dashboard_matched_by_key || a_blank_dashboard
     end
 
+    def lookup_dashboard
+      nil
+    end
+
     def dashboard_matched_by_key
       Dashboard.where(key: params[:key]).first
     end

@@ -132,4 +132,10 @@ describe Freeboard::DashboardController do
 
   end
 
+  describe "lookup dashboard" do
+    it "should return nil" do
+      controller.send(:lookup_dashboard).nil?.must_equal true
+    end
+  end
+
 end
