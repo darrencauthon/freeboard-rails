@@ -35,6 +35,12 @@ describe Freeboard::DashboardController do
         dashboard.id.nil?.must_equal true
       end
 
+      it "should set the key" do
+        controller.index
+        dashboard = controller.instance_eval { @dashboard }
+        dashboard.key.must_be_same_as key
+      end
+
     end
 
     describe "a matching dashboard exists" do
