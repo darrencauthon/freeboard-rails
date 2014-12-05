@@ -68,7 +68,10 @@ describe Freeboard::DashboardController do
 
     let(:key) { Object.new }
 
-    before { params[:key] = key }
+    before do
+      params[:key] = key
+      controller.stubs(:lookup_dashboard).returns nil
+    end
 
     describe "no dashboards exists" do
 
@@ -101,9 +104,13 @@ describe Freeboard::DashboardController do
                             .returns [matching_dashboard]
       end
 
-      it "should return the dashboarddashboard" do
-        dashboard = controller.send(:dashboard)
-        dashboard.must_be_same_as matching_dashboard
+      describe "but the dashboard lookup returned nothing" do
+
+        it "should return the dashboard" do
+          dashboard = controller.send(:dashboard)
+          dashboard.must_be_same_as matching_dashboard
+        end
+
       end
 
     end
