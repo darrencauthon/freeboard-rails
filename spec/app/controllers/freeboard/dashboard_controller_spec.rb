@@ -68,7 +68,10 @@ describe Freeboard::DashboardController do
 
     let(:key) { Object.new }
 
-    before { params[:key] = key }
+    before do
+      params[:key] = key
+      controller.stubs(:lookup_dashboard).returns nil
+    end
 
     describe "no dashboards exists" do
 
@@ -101,13 +104,53 @@ describe Freeboard::DashboardController do
                             .returns [matching_dashboard]
       end
 
-      it "should return the dashboarddashboard" do
-        dashboard = controller.send(:dashboard)
-        dashboard.must_be_same_as matching_dashboard
+      describe "but the dashboard lookup returned nothing" do
+
+        it "should return the dashboard" do
+          dashboard = controller.send(:dashboard)
+          dashboard.must_be_same_as matching_dashboard
+        end
+
+      end
+
+      describe "but the dashboard lookup returned something" do
+
+        let(:something) { Object.new }
+
+        before do
+          controller.stubs(:lookup_dashboard).returns something
+        end
+
+        it "should return that something" do
+          dashboard = controller.send(:dashboard)
+          dashboard.must_be_same_as something
+        end
+
       end
 
     end
 
+  end
+
+  describe "lookup dashboard" do
+    it "should return nil" do
+      controller.send(:lookup_dashboard).nil?.must_equal true
+    end
+
+    it "should be an interchangeable method" do
+      Interchangeable.methods.select do |method|
+        method.target == Freeboard::DashboardController &&
+        method.method_name == :lookup_dashboard
+      end
+    end
+
+    it "should describe what the method is for" do
+      Interchangeable.methods.select do |method|
+        method.target == Freeboard::DashboardController &&
+        method.method_name == :lookup_dashboard &&
+        method.description == 'Your own dashboard lookup'
+      end
+    end
   end
 
 end
