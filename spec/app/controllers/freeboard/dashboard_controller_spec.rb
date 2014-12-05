@@ -136,6 +136,13 @@ describe Freeboard::DashboardController do
     it "should return nil" do
       controller.send(:lookup_dashboard).nil?.must_equal true
     end
+
+    it "should be an interchangeable method" do
+      Interchangeable.methods.select do |method|
+        method.target == Freeboard::DashboardController &&
+        method.method_name == :lookup_dashboard
+      end
+    end
   end
 
 end
