@@ -23,6 +23,15 @@ describe Freeboard::DashboardController do
     end
   end
 
+  describe "get_board" do
+    it "should return the dashboard data as json" do
+      dashboard = Struct.new(:data).new Object.new
+      controller.stubs(:dashboard).returns dashboard
+      controller.expects(:render).with(json: { data: dashboard.data })
+      controller.get_board
+    end
+  end
+
   describe "dashboard" do
 
     let(:key) { Object.new }
