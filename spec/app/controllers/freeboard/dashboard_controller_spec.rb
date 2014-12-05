@@ -23,6 +23,28 @@ describe Freeboard::DashboardController do
         dashboard.id.nil?.must_equal true
       end
     end
+
+    describe "a matching dashboard exists" do
+
+      let(:key) { Object.new }
+
+      let(:matching_dashboard) { Object.new }
+
+      before do
+        params[:key] = key
+        Freeboard::Dashboard.stubs(:where)
+                            .with(key: key)
+                            .returns [matching_dashboard]
+      end
+
+      it "should return the dashboarddashboard" do
+        controller.index
+        dashboard = controller.instance_eval { @dashboard }
+        dashboard.must_be_same_as matching_dashboard
+      end
+
+    end
+
   end
 
 end
