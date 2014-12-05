@@ -58,6 +58,9 @@
   $(document).ready(function(){
     setTimeout(function(){
       $('#full-screen').click();
+      <% if @dashboard.data['prevent_editing'] %>
+        $('#toggle-header').hide()
+      <% end %>
     }, 1000);
   });
 
