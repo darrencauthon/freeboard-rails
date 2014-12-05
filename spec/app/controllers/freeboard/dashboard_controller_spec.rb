@@ -14,6 +14,15 @@ describe Freeboard::DashboardController do
     Freeboard::Dashboard.delete_all
   end
 
+  describe "index" do
+    it "should return the dashboard to the view" do
+      dashboard = Object.new
+      controller.stubs(:dashboard).returns dashboard
+      controller.index
+      controller.instance_eval { @dashboard }.must_be_same_as dashboard
+    end
+  end
+
   describe "dashboard" do
 
     let(:key) { Object.new }
