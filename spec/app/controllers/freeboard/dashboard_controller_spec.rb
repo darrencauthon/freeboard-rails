@@ -20,6 +20,7 @@ describe Freeboard::DashboardController do
         controller.index
         dashboard = controller.instance_eval { @dashboard }
         dashboard.is_a?(Freeboard::Dashboard)
+        dashboard.id.nil?.must_equal true
       end
     end
   end
