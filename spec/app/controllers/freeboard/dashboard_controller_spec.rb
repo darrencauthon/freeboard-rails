@@ -143,6 +143,14 @@ describe Freeboard::DashboardController do
         method.method_name == :lookup_dashboard
       end
     end
+
+    it "should describe what the method is for" do
+      Interchangeable.methods.select do |method|
+        method.target == Freeboard::DashboardController &&
+        method.method_name == :lookup_dashboard &&
+        method.description == 'Your own dashboard lookup'
+      end
+    end
   end
 
 end

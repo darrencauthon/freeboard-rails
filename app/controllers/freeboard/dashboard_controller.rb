@@ -26,6 +26,7 @@ module Freeboard
       @dashboard ||= lookup_dashboard || dashboard_matched_by_key || a_blank_dashboard
     end
 
+    interchangeable_describe "Your own dashboard lookup"
     interchangeable_method(:lookup_dashboard) { nil }
 
     def dashboard_matched_by_key
