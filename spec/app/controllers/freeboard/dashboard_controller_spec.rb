@@ -14,7 +14,7 @@ describe Freeboard::DashboardController do
     Freeboard::Dashboard.delete_all
   end
 
-  describe "index" do
+  describe "dashboard" do
 
     let(:key) { Object.new }
 
@@ -29,15 +29,13 @@ describe Freeboard::DashboardController do
       end
 
       it "should return a blank dashboard" do
-        controller.index
-        dashboard = controller.instance_eval { @dashboard }
+        dashboard = controller.send(:dashboard)
         dashboard.is_a?(Freeboard::Dashboard)
         dashboard.id.nil?.must_equal true
       end
 
       it "should set the key" do
-        controller.index
-        dashboard = controller.instance_eval { @dashboard }
+        dashboard = controller.send(:dashboard)
         dashboard.key.must_be_same_as key
       end
 
@@ -54,8 +52,7 @@ describe Freeboard::DashboardController do
       end
 
       it "should return the dashboarddashboard" do
-        controller.index
-        dashboard = controller.instance_eval { @dashboard }
+        dashboard = controller.send(:dashboard)
         dashboard.must_be_same_as matching_dashboard
       end
 
