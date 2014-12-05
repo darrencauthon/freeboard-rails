@@ -1,6 +1,11 @@
+require 'interchangeable'
+
 module Freeboard
 
   class DashboardController < ApplicationController
+
+    interchangeable_describe "Your own dashboard lookup"
+    interchangeable_method(:lookup_dashboard) { nil }
 
     protect_from_forgery :except => [:save_board]
 
@@ -21,7 +26,7 @@ module Freeboard
     private
 
     def dashboard
-      @dashboard ||= dashboard_matched_by_key || a_blank_dashboard
+      @dashboard ||= lookup_dashboard || dashboard_matched_by_key || a_blank_dashboard
     end
 
     def dashboard_matched_by_key
