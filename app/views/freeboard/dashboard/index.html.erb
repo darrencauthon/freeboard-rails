@@ -43,7 +43,7 @@
   {
     $.ajax({
       type: 'get',
-      url    : '/_get_board/<%= @dashboard.key %>',
+      url    : '/_get_board/<%= @dashboard.key %>' + location.search,
       success: function(data)
       {
         if(Object.keys(data.data).length > 0)
