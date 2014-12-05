@@ -113,6 +113,21 @@ describe Freeboard::DashboardController do
 
       end
 
+      describe "but the dashboard lookup returned something" do
+
+        let(:something) { Object.new }
+
+        before do
+          controller.stubs(:lookup_dashboard).returns something
+        end
+
+        it "should return that something" do
+          dashboard = controller.send(:dashboard)
+          dashboard.must_be_same_as something
+        end
+
+      end
+
     end
 
   end

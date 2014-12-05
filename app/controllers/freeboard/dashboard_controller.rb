@@ -23,7 +23,7 @@ module Freeboard
     private
 
     def dashboard
-      @dashboard ||= dashboard_matched_by_key || a_blank_dashboard
+      @dashboard ||= lookup_dashboard || dashboard_matched_by_key || a_blank_dashboard
     end
 
     def dashboard_matched_by_key
