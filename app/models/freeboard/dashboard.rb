@@ -1,3 +1,5 @@
+require 'interchangeable'
+
 module Freeboard
 
   class Dashboard < ActiveRecord::Base
