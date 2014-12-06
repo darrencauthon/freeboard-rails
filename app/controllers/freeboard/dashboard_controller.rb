@@ -1,5 +1,3 @@
-require 'interchangeable'
-
 module Freeboard
 
   class DashboardController < ApplicationController
