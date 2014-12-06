@@ -10,22 +10,22 @@ module Freeboard
     protect_from_forgery :except => [:save_board]
 
     def index
-      @dashboard = dashboard
+      @dashboard = the_dashboard
     end
 
     def save_board
-      dashboard.data = JSON.parse params[:data]
-      dashboard.save
-      render json: { data: dashboard.data }
+      the_dashboard.data = JSON.parse params[:data]
+      the_dashboard.save
+      render json: { data: the_dashboard.data }
     end
 
     def get_board
-      render json: { data: dashboard.data }
+      render json: { data: the_dashboard.data }
     end
 
     private
 
-    def dashboard
+    def the_dashboard
       @dashboard ||= lookup_dashboard || dashboard_matched_by_key || a_blank_dashboard
     end
 
