@@ -41,7 +41,7 @@ describe Freeboard::DashboardController do
 
     before do
       params[:data] = new_data
-      controller.stubs(:dashboard).returns dashboard
+      Freeboard::Dashboard.stubs(:pull_from).with(params).returns dashboard
 
       JSON.stubs(:parse).with(new_data).returns jsonified_data
 
@@ -70,7 +70,7 @@ describe Freeboard::DashboardController do
 
     before do
       params[:key] = key
-      controller.stubs(:lookup_dashboard).returns nil
+      Freeboard::Dashboard.stubs(:lookup_dashboard).with(params).returns nil
     end
 
     describe "no dashboards exists" do
@@ -82,13 +82,13 @@ describe Freeboard::DashboardController do
       end
 
       it "should return a blank dashboard" do
-        dashboard = controller.send(:dashboard)
+        dashboard = Freeboard::Dashboard.pull_from params
         dashboard.is_a?(Freeboard::Dashboard)
         dashboard.id.nil?.must_equal true
       end
 
       it "should set the key" do
-        dashboard = controller.send(:dashboard)
+        dashboard = Freeboard::Dashboard.pull_from params
         dashboard.key.must_be_same_as key
       end
 
@@ -107,7 +107,7 @@ describe Freeboard::DashboardController do
       describe "but the dashboard lookup returned nothing" do
 
         it "should return the dashboard" do
-          dashboard = controller.send(:dashboard)
+          dashboard = Freeboard::Dashboard.pull_from params
           dashboard.must_be_same_as matching_dashboard
         end
 
@@ -118,11 +118,13 @@ describe Freeboard::DashboardController do
         let(:something) { Object.new }
 
         before do
-          controller.stubs(:lookup_dashboard).returns something
+          Freeboard::Dashboard.stubs(:lookup_dashboard)
+                              .with(params)
+                              .returns something
         end
 
         it "should return that something" do
-          dashboard = controller.send(:dashboard)
+          dashboard = Freeboard::Dashboard.pull_from params
           dashboard.must_be_same_as something
         end
 
@@ -134,19 +136,19 @@ describe Freeboard::DashboardController do
 
   describe "lookup dashboard" do
     it "should return nil" do
-      controller.send(:lookup_dashboard).nil?.must_equal true
+      Freeboard::Dashboard.send(:lookup_dashboard, params).nil?.must_equal true
     end
 
     it "should be an interchangeable method" do
       Interchangeable.methods.select do |method|
-        method.target == Freeboard::DashboardController &&
+        method.target == Freeboard::Dashboard &&
         method.method_name == :lookup_dashboard
       end
     end
 
     it "should describe what the method is for" do
       Interchangeable.methods.select do |method|
-        method.target == Freeboard::DashboardController &&
+        method.target == Freeboard::Dashboard &&
         method.method_name == :lookup_dashboard &&
         method.description == 'Your own dashboard lookup'
       end
