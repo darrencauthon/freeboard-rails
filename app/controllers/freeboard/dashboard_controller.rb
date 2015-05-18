@@ -39,8 +39,10 @@ module Freeboard
 
     def authenticate
       d = dashboard
-      authenticate_or_request_with_http_basic 'auth' do |username, password|
-        username == d.credentials[:username] && password == d.credentials[:password]
+      if dashboard.requires_authentication?
+        authenticate_or_request_with_http_basic 'auth' do |username, password|
+          username == d.credentials[:username] && password == d.credentials[:password]
+        end
       end
     end
 

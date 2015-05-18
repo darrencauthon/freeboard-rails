@@ -184,6 +184,16 @@ describe Freeboard::DashboardController do
         controller.send :authenticate
       end
 
+    end
+
+    describe "the dashboard has NO authentication" do
+
+      before { dashboard.stubs(:requires_authentication?).returns false }
+
+      it "should NOT make the request authenticate with basic http authentication" do
+        controller.expects(:authenticate_or_request_with_http_basic).never
+        controller.send :authenticate
+      end
 
     end
 
