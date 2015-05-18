@@ -37,6 +37,10 @@ module Freeboard
       Dashboard.new(key: params[:key])
     end
 
+    def authenticate
+      authenticate_or_request_with_http_basic 'auth'
+    end
+
   end
 
 end

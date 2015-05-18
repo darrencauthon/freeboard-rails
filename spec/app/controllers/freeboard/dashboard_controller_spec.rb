@@ -153,4 +153,24 @@ describe Freeboard::DashboardController do
     end
   end
 
+  describe "conditional http authentication" do
+
+    let(:dashboard) { Object.new }
+
+    before { controller.stubs(:dashboard).returns dashboard }
+
+    describe "the dashboard has http authentication" do
+
+      before { dashboard.stubs(:requires_authentication?).returns true }
+
+      it "should make the request authenticate with basic http authentication" do
+        controller.expects(:authenticate_or_request_with_http_basic).with('auth')
+        controller.send :authenticate
+      end
+
+
+    end
+
+  end
+
 end
