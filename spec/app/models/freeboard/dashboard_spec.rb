@@ -31,4 +31,25 @@ describe Freeboard::Dashboard do
 
   end
 
+  describe "requires authentication?" do
+
+    let(:dashboard) { Freeboard::Dashboard.new }
+
+    it "should default to false" do
+      dashboard.requires_authentication?.must_equal false
+    end
+
+    describe "a username and password were provided" do
+      before do
+        dashboard.credentials[:username] = random_string
+        dashboard.credentials[:password] = random_string
+      end
+
+      it "should require authentication" do
+        dashboard.requires_authentication?.must_equal true
+      end
+    end
+
+  end
+
 end
