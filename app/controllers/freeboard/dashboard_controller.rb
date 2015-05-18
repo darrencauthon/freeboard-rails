@@ -9,6 +9,8 @@ module Freeboard
 
     protect_from_forgery :except => [:save_board]
 
+    before_filter :authenticate
+
     def index
       @dashboard = dashboard
     end
