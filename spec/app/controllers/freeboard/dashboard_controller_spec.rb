@@ -161,10 +161,26 @@ describe Freeboard::DashboardController do
 
     describe "the dashboard has http authentication" do
 
+      let(:username) { random_string }
+      let(:password) { random_string }
+
       before { dashboard.stubs(:requires_authentication?).returns true }
 
       it "should make the request authenticate with basic http authentication" do
         controller.expects(:authenticate_or_request_with_http_basic).with('auth')
+        controller.send :authenticate
+      end
+
+      it "should check the username and password" do
+        dashboard.stubs(:credentials).returns( { username: username, password: password } )
+        controller.stubs(:username).returns username
+        controller.stubs(:password).returns password
+        def controller.authenticate_or_request_with_http_basic _, &block
+          block.call(username, password).must_equal true
+          block.call(random_string, random_string).must_equal false
+          block.call(random_string, password).must_equal false
+          block.call(username, random_string).must_equal false
+        end
         controller.send :authenticate
       end
 
