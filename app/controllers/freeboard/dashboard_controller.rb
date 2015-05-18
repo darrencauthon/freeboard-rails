@@ -37,6 +37,13 @@ module Freeboard
       Dashboard.new(key: params[:key])
     end
 
+    def authenticate
+      return unless dashboard.requires_authentication?
+      authenticate_or_request_with_http_basic 'auth' do |username, password|
+        username == dashboard.credentials[:username] && password == dashboard.credentials[:password]
+      end
+    end
+
   end
 
 end
