@@ -17,7 +17,7 @@ describe Freeboard::DashboardController do
   describe "index" do
     it "should return the dashboard to the view" do
       dashboard = Object.new
-      controller.stubs(:dashboard).returns dashboard
+      controller.stubs(:the_dashboard).returns dashboard
       controller.index
       controller.instance_eval { @dashboard }.must_be_same_as dashboard
     end
@@ -26,7 +26,7 @@ describe Freeboard::DashboardController do
   describe "get_board" do
     it "should return the dashboard data as json" do
       dashboard = Struct.new(:data).new Object.new
-      controller.stubs(:dashboard).returns dashboard
+      controller.stubs(:the_dashboard).returns dashboard
       controller.expects(:render).with(json: { data: dashboard.data })
       controller.get_board
     end
@@ -41,7 +41,7 @@ describe Freeboard::DashboardController do
 
     before do
       params[:data] = new_data
-      controller.stubs(:dashboard).returns dashboard
+      controller.stubs(:the_dashboard).returns dashboard
 
       JSON.stubs(:parse).with(new_data).returns jsonified_data
 
@@ -82,13 +82,13 @@ describe Freeboard::DashboardController do
       end
 
       it "should return a blank dashboard" do
-        dashboard = controller.send(:dashboard)
+        dashboard = controller.send(:the_dashboard)
         dashboard.is_a?(Freeboard::Dashboard)
         dashboard.id.nil?.must_equal true
       end
 
       it "should set the key" do
-        dashboard = controller.send(:dashboard)
+        dashboard = controller.send(:the_dashboard)
         dashboard.key.must_be_same_as key
       end
 
@@ -107,7 +107,7 @@ describe Freeboard::DashboardController do
       describe "but the dashboard lookup returned nothing" do
 
         it "should return the dashboard" do
-          dashboard = controller.send(:dashboard)
+          dashboard = controller.send(:the_dashboard)
           dashboard.must_be_same_as matching_dashboard
         end
 
@@ -122,7 +122,7 @@ describe Freeboard::DashboardController do
         end
 
         it "should return that something" do
-          dashboard = controller.send(:dashboard)
+          dashboard = controller.send(:the_dashboard)
           dashboard.must_be_same_as something
         end
 
